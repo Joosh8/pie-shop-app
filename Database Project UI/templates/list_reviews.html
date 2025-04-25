@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Reviews</h2>
+<form method="get">
+  <input name="search" placeholder="Product or Customer ID…" value="{{ request.args.get('search','') }}">
+  <button>Go</button>
+</form>
+<p><a href="{{ url_for('add_review') }}">Add Review</a></p>
+<table border="1" cellpadding="4">
+  <tr>
+    <th>Product ID</th><th>Customer ID</th><th>Review</th><th>Actions</th>
+  </tr>
+  {% for r in reviews %}
+  <tr>
+    <td>{{ r.ProductID }}</td>
+    <td>{{ r.CustomerID }}</td>
+    <td>{{ r.Review }}</td>
+    <td>
+      <a href="{{ url_for('edit_review', product_id=r.ProductID, customer_id=r.CustomerID) }}">Edit</a> |
+      <form action="{{ url_for('delete_review', product_id=r.ProductID, customer_id=r.CustomerID) }}" method="post" style="display:inline">
+        <button onclick="return confirm('Delete?');">Del</button>
+      </form>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

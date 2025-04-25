@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Order Items</h2>
+<form method="get">
+  <input name="search" placeholder="Order or Product ID…" value="{{ request.args.get('search','') }}">
+  <button>Go</button>
+</form>
+<p><a href="{{ url_for('add_order_product') }}">Add Order Item</a></p>
+<table border="1" cellpadding="4">
+  <tr>
+    <th>Order ID</th><th>Product ID</th><th>Quantity</th><th>Actions</th>
+  </tr>
+  {% for op in order_products %}
+  <tr>
+    <td>{{ op.OrderID }}</td>
+    <td>{{ op.ProductID }}</td>
+    <td>{{ op.Quantity }}</td>
+    <td>
+      <a href="{{ url_for('edit_order_product', order_id=op.OrderID, product_id=op.ProductID) }}">Edit</a> |
+      <form action="{{ url_for('delete_order_product', order_id=op.OrderID, product_id=op.ProductID) }}" method="post" style="display:inline">
+        <button onclick="return confirm('Delete?');">Del</button>
+      </form>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

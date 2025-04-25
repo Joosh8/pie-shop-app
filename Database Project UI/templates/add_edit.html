@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>{{ 'Edit' if record else 'Add' }} {{ entity.replace('_',' ') }}</h2>
+<form method="post">
+  {% if entity=='Product' %}
+    Name:<br><input name="name" value="{{ record.Name if record }}"><br>
+    Category:<br><input name="category" value="{{ record.Category if record }}"><br>
+    Description:<br><textarea name="description">{{ record.Description if record }}</textarea><br>
+    Price:<br><input name="price" type="number" step="0.01" value="{{ record.Price if record }}"><br>
+    Stock:<br><input name="stock" type="number" value="{{ record.Stock if record }}"><br>
+  {% elif entity=='Customer' %}
+    First Name:<br><input name="first_name" value="{{ record.FirstName if record }}"><br>
+    Last Name:<br><input name="last_name" value="{{ record.LastName if record }}"><br>
+    Email:<br><input name="email" type="email" value="{{ record.Email if record }}"><br>
+    Password:<br><input name="password" type="password"><br>
+    Phone:<br><input name="phone" value="{{ record.Phone if record }}"><br>
+    Registration Date:<br><input name="registration_date" type="date" value="{{ record.RegistrationDate if record }}"><br>
+  {% elif entity=='Order' %}
+    Customer ID:<br><input name="customer_id" type="number" value="{{ record.CustomerID if record }}"><br>
+    Order Date:<br><input name="order_date" type="date" value="{{ record.OrderDate if record }}"><br>
+    Total Price:<br><input name="total_price" type="number" step="0.01" value="{{ record.TotalPrice if record }}"><br>
+  {% elif entity=='Order_Product' %}
+    Order ID:<br><input name="order_id" type="number" value="{{ record.OrderID if record }}"><br>
+    Product ID:<br><input name="product_id" type="number" value="{{ record.ProductID if record }}"><br>
+    Quantity:<br><input name="quantity" type="number" value="{{ record.Quantity if record }}"><br>
+  {% elif entity=='Review' %}
+    Product ID:<br><input name="product_id" type="number" value="{{ record.ProductID if record }}"><br>
+    Customer ID:<br><input name="customer_id" type="number" value="{{ record.CustomerID if record }}"><br>
+    Review:<br><textarea name="review">{{ record.Review if record }}</textarea><br>
+  {% endif %}
+  <button type="submit">Save</button>
+</form>
+{% endblock %}

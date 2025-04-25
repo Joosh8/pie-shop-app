@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Products</h2>
+<form method="get">
+  <input name="search" placeholder="Search…" value="{{ request.args.get('search','') }}">
+  <button>Go</button>
+</form>
+<p><a href="{{ url_for('add_product') }}">Add New Product</a></p>
+<table border="1" cellpadding="4">
+  <tr>
+    <th>ID</th><th>Name</th><th>Category</th><th>Price</th>
+    <th>Stock</th><th>Description</th><th>Actions</th>
+  </tr>
+  {% for p in products %}
+  <tr>
+    <td>{{ p.ProductID }}</td>
+    <td>{{ p.Name }}</td>
+    <td>{{ p.Category }}</td>
+    <td>{{ p.Price }}</td>
+    <td>{{ p.Stock }}</td>
+    <td>{{ p.Description }}</td>
+    <td>
+      <a href="{{ url_for('edit_product', id=p.ProductID) }}">Edit</a> |
+      <form action="{{ url_for('delete_product', id=p.ProductID) }}" method="post" style="display:inline">
+        <button onclick="return confirm('Delete?');">Del</button>
+      </form>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

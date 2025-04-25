@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Customers</h2>
+<form method="get">
+  <input name="search" placeholder="Search…" value="{{ request.args.get('search','') }}">
+  <button>Go</button>
+</form>
+<p><a href="{{ url_for('add_customer') }}">Add Customer</a></p>
+<table border="1" cellpadding="4">
+  <tr>
+    <th>ID</th><th>Name</th><th>Email</th><th>Phone</th>
+    <th>Reg Date</th><th>Actions</th>
+  </tr>
+  {% for c in customers %}
+  <tr>
+    <td>{{ c.CustomerID }}</td>
+    <td>{{ c.FirstName }} {{ c.LastName }}</td>
+    <td>{{ c.Email }}</td>
+    <td>{{ c.Phone }}</td>
+    <td>{{ c.RegistrationDate }}</td>
+    <td>
+      <a href="{{ url_for('edit_customer', id=c.CustomerID) }}">Edit</a> |
+      <form action="{{ url_for('delete_customer', id=c.CustomerID) }}" method="post" style="display:inline">
+        <button onclick="return confirm('Delete?');">Del</button>
+      </form>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}
